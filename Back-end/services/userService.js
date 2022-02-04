@@ -1,10 +1,13 @@
 const User = require('../models/user')
 
-exports.postSignUp = (req, res) => {
-    
+exports.signUp = (name, email, password) => {
     User.create({
         name: name,
         email: email,
         password: password
     })
+    .then(_ => {
+        return {message: 'succesful'}
+    })
+    .catch()
 }
