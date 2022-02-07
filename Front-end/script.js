@@ -1,12 +1,11 @@
-document.addEventListener('submit', (e) => {
-    if(e.target.className == 'submit'){
-        signup(e)
-    }
-})
+const form = document.getElementById('formRegistration')
+
+form.addEventListener('submit', signup)
 
 function signup(e) {
     e.preventDefault()
-    const form = new FormData(e.target.parentElement)
+    
+    const form = new FormData(e.target)
 
     let obj = {
         name: form.get('username'),
@@ -19,7 +18,6 @@ function signup(e) {
     .then((result) => {
         alert(result.data.message)
     }).catch((err) => {
-        // console.log(err)
-        alert(err.data.message)
+        alert('Unable to create user')
     });
 }

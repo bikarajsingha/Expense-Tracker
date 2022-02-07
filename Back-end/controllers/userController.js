@@ -12,6 +12,6 @@ exports.postSignUp = async (req, res) => {
 
         return res.status(200).json({message: 'Successfully signed up'})
     }catch(err) {
-        return res.json({message: 'Unable to create new user'})
+        return res.status(403).json({message: 'Unable to create new user'})
     }
 }
