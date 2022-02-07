@@ -6,17 +6,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Expenses - sign up</title>
     <link rel="stylesheet" href="style.css"></link>
+    <script src="script.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
 <body>
     <main class="signUpForm">
         <div class="signUp">
             <span class="icon">Welcome to Expenses</span>
             <h1>Create your Expenses Account</h1>
-            <form>
-                <input type="text" name="username" placeholder="Name">
-                <input type="email" name="email" placeholder="Email">
-                <input type="text" name="phoneNumber" placeholder="Phone number">
-                <input type="password" name="password" placeholder="Password">
+            <form class="formRegistration">
+                <input type="text" name="username" placeholder="Name" id="name" required />
+                <input type="email" name="email" placeholder="Email" id="email" required />
+                <input type="text" name="phoneNumber" placeholder="Phone number" id="number" required />
+                <input type="password" name="password" placeholder="Password"id="pass" required />
                 <button type="submit" class="submit">Sign Up</button>
             </form>
         </div>
