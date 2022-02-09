@@ -1,8 +1,27 @@
-const form = document.getElementById('formRegistration')
+const form = document.querySelector('form')
 
-form.addEventListener('submit', signup)
+form.addEventListener('submit', e => {
+    if(e.target.className == 'formRegistration'){
+        signUp(e)
+    }else if(e.target.className == 'logInForm'){
+        logIn(e)
+    }
+})
 
-function signup(e) {
+function logIn(e){
+    e.preventDefault(e.target)
+
+    const form = new FormData(e.target)
+
+    let obj =  {
+        email: form.get('name'),
+        password: form.get('password')
+    }
+
+    console.log(obj)
+}
+
+function signUp(e) {
     e.preventDefault()
     
     const form = new FormData(e.target)

@@ -15,3 +15,7 @@ exports.postSignUp = async (req, res) => {
         return res.status(403).json({message: 'Unable to create new user'})
     }
 }
+
+exports.postLogIn = async (req, res) => {
+    
+}
