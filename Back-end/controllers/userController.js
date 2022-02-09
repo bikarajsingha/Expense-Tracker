@@ -1,8 +1,12 @@
 const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
+
+require('dotenv').config()
+
 const userService = require('../services/userService')
 
 exports.postSignUp = async (req, res) => {
-    try{
+    try {
         const { name, email, number, password } = req.body
 
         const salt = await bcrypt.genSalt(10)
@@ -10,12 +14,30 @@ exports.postSignUp = async (req, res) => {
         
         await userService.signUp(name, email, number, passwordEncrypted)
 
-        return res.status(200).json({message: 'Successfully signed up'})
+        return res.status(201).json({message: 'Successfully signed up'})
     }catch(err) {
         return res.status(403).json({message: 'Unable to create new user'})
     }
 }
 
 exports.postLogIn = async (req, res) => {
+    const { email, password } = req.body
     
+    await userService.logIn(email)
+    .then(user => {
+        if(user.length < 1) return res.status(404).json({message: 'User not found'})
+            
+        bcrypt.compare(password, user[0].password, (err, result) => {
+            if(err) {
+                return res.statut(500).json('Something went wrong')
+            }
+            if(result){
+                const jwttoken = jwt.sign({id: user[0].id, isadmin: false}, process.env.TOKEN_SECRET)
+                res.status(200).json({token: jwttoken, success: true})
+            }else {
+                res.status(401).json({message: 'User not authorized'})
+            }
+        })
+    })
+    .catch(err => console.log(err))
 }

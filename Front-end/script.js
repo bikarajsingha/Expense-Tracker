@@ -18,7 +18,10 @@ function logIn(e){
         password: form.get('password')
     }
 
-    console.log(obj)
+    axios.post('http://localhost:3000/user/log-in', obj)
+    .then(res => {
+        console.log(res.data)
+    })
 }
 
 function signUp(e) {

@@ -8,3 +8,7 @@ exports.signUp = (name, email, number, password) => {
         password: password
     })
 }
+
+exports.logIn = (email) => {
+    return User.findAll({ where: {email: email}})
+}
