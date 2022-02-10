@@ -22,7 +22,7 @@ exports.postSignUp = async (req, res) => {
 
 exports.postLogIn = async (req, res) => {
     const { email, password } = req.body
-    
+
     await userService.logIn(email)
     .then(user => {
         if(user.length < 1) return res.status(404).json({message: 'User not found'})
@@ -32,7 +32,7 @@ exports.postLogIn = async (req, res) => {
                 return res.statut(500).json('Something went wrong')
             }
             if(result){
-                const jwttoken = jwt.sign({id: user[0].id, isadmin: false}, process.env.TOKEN_SECRET)
+                const jwttoken = jwt.sign({ id: user[0].id }, process.env.TOKEN_SECRET)
                 res.status(200).json({token: jwttoken, success: true})
             }else {
                 res.status(401).json({message: 'User not authorized'})
@@ -40,4 +40,34 @@ exports.postLogIn = async (req, res) => {
         })
     })
     .catch(err => console.log(err))
+}
+
+exports.authenticate = async(req, res, next) => {
+    try {
+        const token = req.header('authorization')
+        
+        const userId = Number(jwt.verify(token, process.env.TOKEN_SECRET).id)
+        await userService.findUser(userId)
+        .then(user => {
+            req.user = user
+            next()
+        })
+    }catch(err) {
+        console.log(err)
+        return res.status(404).json({success: false})
+    }
+}
+
+exports.postExpense = async(req, res) => {
+    try {
+        const { expense, description, category } = req.body
+
+        await userService.createExpense(req.user, expense, description, category)
+        .then(expense => {
+            console.log(res, 88888888888888)
+            return res.status(201).json({expense, success: true})
+        })
+    }catch(err) {
+        return res.status(402).json({success: false, error: err})
+    }
 }

@@ -12,3 +12,15 @@ exports.signUp = (name, email, number, password) => {
 exports.logIn = (email) => {
     return User.findAll({ where: {email: email}})
 }
+
+exports.findUser = (id) => {
+    return User.findByPk(id)
+}
+
+exports.createExpense = (user, exp, des, cat) => {
+    return user.createExpense({
+        amount: exp,
+        description: des,
+        category: cat
+    })
+}

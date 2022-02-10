@@ -3,6 +3,8 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 
 const sequelize = require('./util/database')
+const User = require('./models/user')
+const Expense = require('./models/expense')
 
 const userRouter = require('./routes/userRoute')
 
@@ -16,6 +18,9 @@ app.use('/user', userRouter)
 app.get('*', (req, res) => {
     res.send('<h1 style="max-width: 300px; margin: 0px auto; margin-top: 150px;">Welcome to Server</h1>')
 })
+
+User.hasMany(Expense)
+Expense.belongsTo(User)
 
 sequelize.sync()
 .then(_ => {
