@@ -22,7 +22,7 @@ app.get('*', (req, res) => {
 User.hasMany(Expense)
 Expense.belongsTo(User)
 
-sequelize.sync({force: true})
+sequelize.sync()
 .then(_ => {
     app.listen(3000)
 })

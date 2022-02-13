@@ -14,5 +14,7 @@ form.addEventListener('submit', e => {
 
     axios.post('http://localhost:3000/user/addexpense', expenseDetails, {headers: {"Authorization": token}})
     .then(res => console.log('workedddd!!!!!!!!'))
-    .catch(err => console.log('nnnnnnnnnnnnno'))
+    .catch(err => {
+        window.location.replace('../Login/login.html')
+    })
 })

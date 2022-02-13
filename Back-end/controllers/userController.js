@@ -21,25 +21,26 @@ exports.postSignUp = async (req, res) => {
 }
 
 exports.postLogIn = async (req, res) => {
-    const { email, password } = req.body
+    try{
+        const { email, password } = req.body
 
-    await userService.logIn(email)
-    .then(user => {
+        const user = await userService.logIn(email)
         if(user.length < 1) return res.status(404).json({message: 'User not found'})
-            
+                
         bcrypt.compare(password, user[0].password, (err, result) => {
             if(err) {
-                return res.statut(500).json('Something went wrong')
+                return res.status(500).json('Something went wrong')
             }
             if(result){
                 const jwttoken = jwt.sign({ id: user[0].id }, process.env.TOKEN_SECRET)
-                res.status(200).json({token: jwttoken, success: true})
+                return res.status(200).json({token: jwttoken, success: true})
             }else {
-                res.status(401).json({message: 'User not authorized'})
+                return res.status(401).json({message: 'User not authorized'})
             }
         })
-    })
-    .catch(err => console.log(err))
+    }catch(err) {
+        return res.status(500).json('Something went wrong')
+    }
 }
 
 exports.authenticate = async(req, res, next) => {
@@ -47,13 +48,9 @@ exports.authenticate = async(req, res, next) => {
         const token = req.header('authorization')
         
         const userId = Number(jwt.verify(token, process.env.TOKEN_SECRET).id)
-        await userService.findUser(userId)
-        .then(user => {
-            req.user = user
-            next()
-        })
+        req.user = await userService.findUser(userId)
+        next()
     }catch(err) {
-        console.log(err)
         return res.status(404).json({success: false})
     }
 }
@@ -62,11 +59,9 @@ exports.postExpense = async(req, res) => {
     try {
         const { expense, description, category } = req.body
 
-        await userService.createExpense(req.user, expense, description, category)
-        .then(expense => {
-            console.log(res, 88888888888888)
-            return res.status(201).json({expense, success: true})
-        })
+        const expenseDetails = await userService.createExpense(req.user, expense, description, category)
+        
+        return res.status(201).json({expenseDetails, success: true})
     }catch(err) {
         return res.status(402).json({success: false, error: err})
     }

@@ -13,7 +13,11 @@ form.addEventListener('submit', e => {
     axios.post('http://localhost:3000/user/log-in', loginDetails)
     .then(res => {
         if(res.status == 200) localStorage.setItem('token', res.data.token)
+        window.location.replace('../Expense/index.html')
         alert('successfully logged In')
+    })
+    .catch(err => {
+        console.log('INVALID CRED')
     })
 })
 
