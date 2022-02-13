@@ -59,10 +59,22 @@ exports.postExpense = async(req, res) => {
     try {
         const { expense, description, category } = req.body
 
-        const expenseDetails = await userService.createExpense(req.user, expense, description, category)
+        await userService.createExpense(req.user, expense, description, category)
         
-        return res.status(201).json({expenseDetails, success: true})
+        return res.status(201).json({success: true})
     }catch(err) {
         return res.status(402).json({success: false, error: err})
     }
+}
+
+exports.getExpense = async(req, res) => {
+    try {
+        const expense = await userService.getUserExpense(req.user)
+        
+        return res.json(expense)
+    }catch(err) {
+        console.log(err)
+        return res.status(500).json({success: false})
+    }
+
 }

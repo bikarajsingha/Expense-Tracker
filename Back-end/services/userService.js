@@ -24,3 +24,7 @@ exports.createExpense = (user, exp, des, cat) => {
         category: cat
     })
 }
+
+exports.getUserExpense = (user) => {
+    return user.getExpenses()
+}
