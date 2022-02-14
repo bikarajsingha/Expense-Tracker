@@ -91,4 +91,18 @@ a:hover,
     color: white;
 }
 
+#expenseList {
+    width: 250px;
+    margin: 0px auto;
+}
 
+#rzp-button1 {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    background-color: white;
+    padding: 3px 8px;
+    border-radius: 4px;
+    color: rgb(1, 156, 1);
+    font-weight: bold;
+}

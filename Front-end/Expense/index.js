@@ -1,4 +1,5 @@
 const form = document.querySelector('form')
+const token = localStorage.getItem('token')
 
 
 document.addEventListener('DOMContentLoaded', (e) => {
@@ -10,17 +11,15 @@ form.addEventListener('submit', e => {
 
     const form = new FormData(e.target)
 
-    const token = localStorage.getItem('token')
     const expenseDetails = {
         expense: form.get('expenseAmount'),
         description: form.get('description'),
         category: form.get('category')
     }
 
-    axios.post('http://localhost:3000/user/addexpense', expenseDetails, {headers: {"Authorization": token}})
+    axios.post('http://localhost:3000/expense/addexpense', expenseDetails, {headers: {"Authorization": token}})
     .then(res => {
         getExpenses()
-        console.log(res)
     })
     .catch(err => {
         window.location.replace('../Login/login.html')
@@ -29,9 +28,7 @@ form.addEventListener('submit', e => {
 
 
 function getExpenses(){
-    const token = localStorage.getItem('token')
-
-    axios.get('http://localhost:3000/user/allexpense', {headers: {"Authorization": token}})
+    axios.get('http://localhost:3000/expense/allexpense', {headers: {"Authorization": token}})
     .then(res => {
         const result = res.data
         const expenseList = document.getElementById('expenseList')
@@ -40,10 +37,50 @@ function getExpenses(){
             expenseList.innerHTML = ''
             result.forEach(expense => {
                 div = document.createElement('div')
-                div.innerText= `${expense.amount} ${expense.description} ${expense.category}`
+                div.innerText= `$${expense.amount}--${expense.description}--${expense.category}`
                 expenseList.append(div)
             })
         }
+    })
+    .catch(err => console.log(err))
+}
+
+document.getElementById('rzp-button1').onclick = function(e) {
+    axios.get('http://localhost:3000/purchase/premium-membership', {headers: {"Authorization": token}})
+    .then(res => {
+        res = res.data
+      
+        let options = {
+            "key": res.key_id,
+            "name": "Test company",
+            "order_id": res.order.id,
+            "prefill": {
+                "name": "Test User",
+                "email": "test.user@eample.com",
+                "contact": "6000873255"
+            },
+            "theme": {
+                "color": "#3399cc"
+            },
+            "handler": function(response) {
+                axios.post('http://localhost:3000/purchase/update-transaction-status', {
+                    order_id: options.order_id,
+                    payment_id: response.razorpay_payment_id
+                }, {
+                    headers: { "Authorization": token }
+                })
+                .then(_ => {
+                    console.log('You are a Premium User Now')
+                })
+                .catch(err => {
+                    alert('Something went wrong. Try Again!!!')
+                })
+            }
+        }
+
+        const rzp1 = new Razorpay(options)
+        rzp1.open()
+        e.preventDefault()
     })
     .catch(err => console.log(err))
 }

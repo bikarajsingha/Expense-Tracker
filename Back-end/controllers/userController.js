@@ -1,9 +1,9 @@
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 
-require('dotenv').config()
-
 const userService = require('../services/userService')
+
+require('dotenv').config()
 
 exports.postSignUp = async (req, res) => {
     try {
@@ -23,10 +23,10 @@ exports.postSignUp = async (req, res) => {
 exports.postLogIn = async (req, res) => {
     try{
         const { email, password } = req.body
-
+    
         const user = await userService.logIn(email)
         if(user.length < 1) return res.status(404).json({message: 'User not found'})
-                
+    
         bcrypt.compare(password, user[0].password, (err, result) => {
             if(err) {
                 return res.status(500).json('Something went wrong')
@@ -41,40 +41,4 @@ exports.postLogIn = async (req, res) => {
     }catch(err) {
         return res.status(500).json('Something went wrong')
     }
-}
-
-exports.authenticate = async(req, res, next) => {
-    try {
-        const token = req.header('authorization')
-        
-        const userId = Number(jwt.verify(token, process.env.TOKEN_SECRET).id)
-        req.user = await userService.findUser(userId)
-        next()
-    }catch(err) {
-        return res.status(404).json({success: false})
-    }
-}
-
-exports.postExpense = async(req, res) => {
-    try {
-        const { expense, description, category } = req.body
-
-        await userService.createExpense(req.user, expense, description, category)
-        
-        return res.status(201).json({success: true})
-    }catch(err) {
-        return res.status(402).json({success: false, error: err})
-    }
-}
-
-exports.getExpense = async(req, res) => {
-    try {
-        const expense = await userService.getUserExpense(req.user)
-        
-        return res.json(expense)
-    }catch(err) {
-        console.log(err)
-        return res.status(500).json({success: false})
-    }
-
 }

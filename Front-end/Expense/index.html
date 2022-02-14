@@ -7,6 +7,7 @@
     <title>Expenses</title>
     <script src="index.js" defer></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     <link rel="stylesheet" href="../style.css">
 </head>
 <body>
@@ -28,9 +29,11 @@
                     <option value="Movie">Movie</option>
                 </select>
                 <button type="submit" class="submit">Add Expense</button>
-                <div id="expenseList"></div>
+                
             </form>
+            <div id="expenseList"></div>
         </div>
     </main>
+    <button id="rzp-button1">BUY PREMIUM</button>
 </body>
 </html>
