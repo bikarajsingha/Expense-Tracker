@@ -1,4 +1,5 @@
-const form = document.querySelector('form')
+const form = document.getElementById('logInForm')
+const formPassword = document.getElementById('forgetPasswordForm')
 
 form.addEventListener('submit', e => {
     e.preventDefault(e.target)
@@ -20,4 +21,16 @@ form.addEventListener('submit', e => {
         console.log('INVALID CRED')
     })
 })
+
+formPassword.addEventListener('submit', (e) => {
+e.preventDefault()
+
+const form = new FormData(e.target)
+
+axios.post('http://localhost:300/password/forgotpassword', {email: form.get('email')})
+.then()
+.catch()
+})
+
+
 
