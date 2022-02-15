@@ -60,7 +60,7 @@ document.getElementById('rzp-button1').onclick = function(e) {
                 "contact": "6000873255"
             },
             "theme": {
-                "color": "#3399cc"
+                "color": "rgb(113, 113, 238)"
             },
             "handler": function(response) {
                 axios.post('http://localhost:3000/purchase/update-transaction-status', {
@@ -70,7 +70,7 @@ document.getElementById('rzp-button1').onclick = function(e) {
                     headers: { "Authorization": token }
                 })
                 .then(_ => {
-                    console.log('You are a Premium User Now')
+                    alert('You are a Premium User Now')
                 })
                 .catch(err => {
                     alert('Something went wrong. Try Again!!!')
@@ -81,6 +81,11 @@ document.getElementById('rzp-button1').onclick = function(e) {
         const rzp1 = new Razorpay(options)
         rzp1.open()
         e.preventDefault()
+
+        rzp1.on('payment.failed', function (response) {
+            alert('Something went wrong. Try Again!!!')
+            console.log(response.error)
+        })
     })
     .catch(err => console.log(err))
 }
