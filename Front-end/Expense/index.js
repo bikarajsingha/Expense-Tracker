@@ -1,5 +1,6 @@
 const form = document.querySelector('form')
 const token = localStorage.getItem('token')
+const notification = document.getElementById('premium')
 
 
 document.addEventListener('DOMContentLoaded', (e) => {
@@ -70,7 +71,8 @@ document.getElementById('rzp-button1').onclick = function(e) {
                     headers: { "Authorization": token }
                 })
                 .then(_ => {
-                    alert('You are a Premium User Now')
+                    notification.classList.add('active')
+                    // premiumUser()
                 })
                 .catch(err => {
                     alert('Something went wrong. Try Again!!!')
@@ -88,6 +90,32 @@ document.getElementById('rzp-button1').onclick = function(e) {
         })
     })
     .catch(err => console.log(err))
+}
+
+const notifButton = document.getElementsByClassName('notfButton')[0].addEventListener('click', (e) =>{
+    notification.classList.remove('active')
+    premiumUser()
+})
+
+function premiumUser() {
+    const body = document.body
+    const h1 = document.querySelector('.container h1')
+    const expenses = document.querySelector('.expenses')
+    const input = document.querySelectorAll('.expenses form input')
+    const select = document.querySelector('.expenses form select')
+    const submit = document.querySelector('.submit')
+    const rzpButton = document.querySelector('#rzp-button1')
+    
+
+    body.classList.add('active')
+    h1.classList.add('active')
+    expenses.classList.add('active')
+    input[0].classList.add('active')
+    input[1].classList.add('active')
+    select.classList.add('active')
+    submit.classList.add('active')
+    
+    rzpButton.remove()
 }
 
 
