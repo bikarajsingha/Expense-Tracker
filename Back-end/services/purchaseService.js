@@ -13,3 +13,7 @@ exports.transaction = (order_id, payment_id) => {
         order.update({ paymentId: payment_id, status: 'SUCCESSFUL'})
     })
 }
+
+exports.hasSubscribed = (user) => {
+    return user.getOrders({ where: {status: 'SUCCESSFUL'}})
+}

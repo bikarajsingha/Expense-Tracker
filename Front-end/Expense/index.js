@@ -1,15 +1,15 @@
 const form = document.querySelector('form')
-const token = localStorage.getItem('token')
 const notification = document.getElementById('premium')
 
 
 document.addEventListener('DOMContentLoaded', (e) => {
-    getExpenses()
+    getExpenses() 
+    premiumUser()
 })
 
 form.addEventListener('submit', e => {
     e.preventDefault()
-
+    const token = localStorage.getItem('token')
     const form = new FormData(e.target)
 
     const expenseDetails = {
@@ -29,6 +29,7 @@ form.addEventListener('submit', e => {
 
 
 function getExpenses(){
+    const token = localStorage.getItem('token')
     axios.get('http://localhost:3000/expense/allexpense', {headers: {"Authorization": token}})
     .then(res => {
         const result = res.data
@@ -47,6 +48,8 @@ function getExpenses(){
 }
 
 document.getElementById('rzp-button1').onclick = function(e) {
+    const token = localStorage.getItem('token')
+
     axios.get('http://localhost:3000/purchase/premium-membership', {headers: {"Authorization": token}})
     .then(res => {
         res = res.data
@@ -72,7 +75,6 @@ document.getElementById('rzp-button1').onclick = function(e) {
                 })
                 .then(_ => {
                     notification.classList.add('active')
-                    // premiumUser()
                 })
                 .catch(err => {
                     alert('Something went wrong. Try Again!!!')
@@ -94,28 +96,34 @@ document.getElementById('rzp-button1').onclick = function(e) {
 
 const notifButton = document.getElementsByClassName('notfButton')[0].addEventListener('click', (e) =>{
     notification.classList.remove('active')
-    premiumUser()
+    location.reload()
 })
 
 function premiumUser() {
-    const body = document.body
-    const h1 = document.querySelector('.container h1')
-    const expenses = document.querySelector('.expenses')
-    const input = document.querySelectorAll('.expenses form input')
-    const select = document.querySelector('.expenses form select')
-    const submit = document.querySelector('.submit')
-    const rzpButton = document.querySelector('#rzp-button1')
-    
+    const token = localStorage.getItem('token')
 
-    body.classList.add('active')
-    h1.classList.add('active')
-    expenses.classList.add('active')
-    input[0].classList.add('active')
-    input[1].classList.add('active')
-    select.classList.add('active')
-    submit.classList.add('active')
+    axios.get('http://localhost:3000/purchase/is-premium', {headers: {"Authorization": token}}) 
+    .then(res => {
+        console.log(res)
+        const body = document.body
+        const h1 = document.querySelector('.container h1')
+        const expenses = document.querySelector('.expenses')
+        const input = document.querySelectorAll('.expenses form input')
+        const select = document.querySelector('.expenses form select')
+        const submit = document.querySelector('.submit')
+        const rzpButton = document.querySelector('#rzp-button1')
+        
     
-    rzpButton.remove()
+        body.classList.add('active')
+        h1.classList.add('active')
+        expenses.classList.add('active')
+        input[0].classList.add('active')
+        input[1].classList.add('active')
+        select.classList.add('active')
+        submit.classList.add('active')
+        
+        rzpButton.remove()
+    })
+    .catch(err => console.log(err, 999999999999))
 }
-
 

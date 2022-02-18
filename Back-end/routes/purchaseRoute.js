@@ -5,8 +5,10 @@ const auth = require('../middlewares/auth')
 
 const router = express.Router()
 
-router.use('/*', auth.authenticate)
 router.get('/premium-membership', purchaseController.purchasePremium)
 router.post('/update-transaction-status', purchaseController.updateTransaction)
+router.get('/is-premium', purchaseController.isPremium)
+
+
 
 module.exports = router

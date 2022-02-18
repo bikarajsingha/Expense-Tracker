@@ -5,7 +5,6 @@ const auth = require('../middlewares/auth')
 
 const router = express.Router()
 
-router.use('/*', auth.authenticate)
 router.post('/addexpense', expenseController.postExpense)
 router.get('/allexpense', expenseController.getExpense)
 

@@ -1,3 +1,4 @@
+const { json } = require('body-parser')
 const Razorpay = require('razorpay')
 
 const purchaseService = require('../services/purchaseService')
@@ -25,6 +26,17 @@ const purchasePremium = async (req, res) => {
     }
 }
 
+const isPremium = async(req, res) => {
+    try { 
+        const user = await purchaseService.hasSubscribed(req.user)
+        
+        if(user.length) return res.status(200).json({success: true})
+    }catch(err) {
+        console.log(err )
+        return res.status(403).json('success: false')
+    }
+}
+
 const updateTransaction = async (req, res) => {
     try {
         const { payment_id, order_id } = req.body
@@ -39,5 +51,6 @@ const updateTransaction = async (req, res) => {
 
 module.exports = {
     purchasePremium,
+    isPremium,
     updateTransaction
 }
