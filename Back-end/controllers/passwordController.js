@@ -1,25 +1,30 @@
-const sgMail = require('@sendgrid/mail')
+const NodeMailer = require('nodemailer')
 
-sgMail.setApiKey(process.env.SENDGRID_KEY)
+require('dotenv').config()
 
 exports.forgetPasswordMail = async (req, res) => {
     try{
         const { email } = req.body
-
+        const transporter = NodeMailer.createTransport({
+            host: 'smtp.gmail.com',
+            port: 587,
+            auth: {
+                user: process.env.USER_GMAIL,
+                pass: process.env.PASS
+            }
+        })
         const message = {
-            to: 'samy21100@gmail.com',
-            from: 'bikarajsingha@gmail.com',
-            subject: 'Hello from sendgrid',
-            text: 'Hello my friend',
-            html: '<h1>Hello my friend</h1>'
+            from: 'developer211185@gmail.com',
+            to: email,
+            subject: 'Hello from NODEMAILER',
+            text: 'Hi, this was sent from NodeJs and NodeMailer'
         }
-        
-        const response = await sgMail.send(message)
-        console.log(response)
+
+        const response = await transporter.sendMail(message)
         return res.status(200).json({success: true, response})
     }catch(err) {
         console.log(err)
-        res.staus(500).json({success: false})
+        res.status(500).json({success: false})
     }
 }
 
