@@ -14,7 +14,8 @@ form.addEventListener('submit', e => {
 
     axios.post('http://localhost:3000/user/sign-up', signUpDetails)
     .then((result) => {
-        alert(result.data.message)
+        alert('Successfully signed up')
+        setTimeout(2000, window.location.replace('../Login/login.html'))
     }).catch((err) => {
         alert('Unable to create user')
     });

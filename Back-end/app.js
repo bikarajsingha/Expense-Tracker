@@ -6,6 +6,7 @@ const sequelize = require('./util/database')
 const User = require('./models/user')
 const Expense = require('./models/expense')
 const Order = require('./models/order')
+const LeaderBoard = require('./models/leaderBoard')
 
 const userRouter = require('./routes/userRoute')
 const expenseRouter = require('./routes/expenseRoute')
@@ -34,6 +35,9 @@ Expense.belongsTo(User)
 
 User.hasMany(Order)
 Order.belongsTo(User)
+
+User.hasOne(LeaderBoard)
+LeaderBoard.belongsTo(User)
 
 sequelize.sync()
 .then(_ => {

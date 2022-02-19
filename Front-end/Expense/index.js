@@ -112,8 +112,9 @@ function premiumUser() {
         const select = document.querySelector('.expenses form select')
         const submit = document.querySelector('.submit')
         const rzpButton = document.querySelector('#rzp-button1')
+        const leadButton = document.getElementById('leaderBoard')
         
-    
+        console.log(rzpButton)
         body.classList.add('active')
         h1.classList.add('active')
         expenses.classList.add('active')
@@ -121,9 +122,13 @@ function premiumUser() {
         input[1].classList.add('active')
         select.classList.add('active')
         submit.classList.add('active')
-        
+        leadButton.classList.add('active')
+
         rzpButton.remove()
     })
     .catch(err => console.log(err, 999999999999))
 }
 
+const leaderBoard = document.getElementById('leaderBoard').onclick = function(){
+    window.location.href="./leaderboard.html"
+}
