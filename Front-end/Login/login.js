@@ -31,8 +31,12 @@ if(formPassword){
         const form = new FormData(e.target)
       
         axios.post('http://localhost:3000/password/forgotpassword', {email: form.get('email')})
-        .then(res => console.log(res))
-        .catch(err => console.log(err))
+        .then(res => {
+            alert('email successfuly sent')
+        })
+        .catch(err => {
+            alert("user doesn't exit")
+        })
     })
     
 }

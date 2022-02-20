@@ -17,3 +17,12 @@ exports.findUser = (id) => {
     return User.findByPk(id)
 }
 
+exports.updatePassword = (id, pass) => {
+    return User.findByPk(id)
+    .then(user => {
+        user.update({
+            password: pass
+        })
+    })
+}
+
