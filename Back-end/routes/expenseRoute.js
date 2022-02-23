@@ -2,7 +2,7 @@ const express = require('express')
 
 const expenseController = require('../controllers/expenseController')
 const leaderBoardmiddleware = require('../middlewares/leaderBoard')
-const auth = require('../middlewares/auth')
+
 
 const router = express.Router()
 

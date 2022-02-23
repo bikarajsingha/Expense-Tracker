@@ -5,14 +5,14 @@ exports.createBoardRow = (user, username) => {
 }
 
 exports.updateExpenseAmount = (user, value) => {
+    
     return user.getLeaderBoard()
     .then(row => {
         let expense = row.dataValues.totalExpense
         value = Number(value)
-
+       
         if(expense) expense += value
-
-        row.update({totalExpense: expense})
+        row.update({totalExpense: value})
     })
 }
 
