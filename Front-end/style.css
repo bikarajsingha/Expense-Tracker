@@ -177,8 +177,47 @@ input[type=number]{
 }
 
 #expenseList {
-    width: 190px;
-    margin: 0px auto;
+    margin-top: 10px;
+}
+
+.expenseItem {
+    margin-top: 5px;
+    border: 1.5px solid black;
+    border-radius: 4px;
+    padding: 4px 2px;
+}
+
+.expenseItemAmount {
+    display: inline-block;
+    width: 20%;
+}
+
+.expenseItemDesc {
+    display: inline-block;
+    width: 45%;
+}
+
+.expenseItemCat {
+    display: inline-block;
+    width: 20%;
+}
+
+.expenseItemDel {
+    display: inline-block;
+    width: 14.5%;
+    background-color: rgb(5, 206, 206);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 3px 0px;
+}
+
+.expenseItemDel:hover {
+    background-color: rgb(13, 241, 241);
+}
+
+.expenseItemId {
+    display: none;
 }
 
 #rzp-button1 {
@@ -247,6 +286,19 @@ body.active {
 
 #leaderBoard.active:hover {
     background-color: gold;
+}
+
+.expenseItem.active {
+    border: 2px solid gold;
+}
+
+.expenseItemDel.active {
+    background-color: rgb(13, 241, 241);
+    color: black;
+}
+
+.expenseItemDel.active:hover {
+    background-color: rgb(5, 206, 206)
 }
 
 /* PREMIUM NOTIFICATION */

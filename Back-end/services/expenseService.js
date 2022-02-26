@@ -1,3 +1,4 @@
+const Expense = require("../models/expense")
 
 exports.createExpense = (user, exp, des, cat) => {
     return user.createExpense({
@@ -9,4 +10,8 @@ exports.createExpense = (user, exp, des, cat) => {
 
 exports.getUserExpense = (user) => {
     return user.getExpenses()
+}
+
+exports.postDeleteExpense = (ExpenseId) => {
+    return Expense.destroy({ where: {id: ExpenseId}})
 }

@@ -19,7 +19,7 @@ if(form){
             alert('successfully logged In')
         })
         .catch(err => {
-            console.log('INVALID CRED')
+            alert('Invalid credentials')
         })
     })
 }

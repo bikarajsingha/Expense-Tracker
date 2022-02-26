@@ -1,6 +1,3 @@
-const jwt = require('jsonwebtoken')
-
-const userService = require('../services/userService')
 const expenseService = require('../services/expenseService')
 
 exports.postExpense = async(req, res) => {
@@ -19,10 +16,23 @@ exports.getExpense = async(req, res) => {
     try {
         const expense = await expenseService.getUserExpense(req.user)
         
-        return res.json(expense)
+        return res.status(200).json(expense)
     }catch(err) {
         console.log(err)
         return res.status(500).json({success: false})
     }
 
+}
+
+exports.delExpense = async(req, res) => {
+    try {
+        const { id } = req.body
+    
+        await expenseService.postDeleteExpense(Number(id))
+
+        return res.status(200).json({success: true})
+    }catch(err) {
+        console.log(err)
+        return res.status(500).json({success: false})
+    }
 }

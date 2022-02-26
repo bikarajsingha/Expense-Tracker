@@ -1,6 +1,11 @@
 const form = document.querySelector('form')
 const notification = document.getElementById('premium')
 
+window.addEventListener('click', (e) => {
+    if(e.target.className == 'expenseItemDel'){
+        delExpense(e)
+    }
+})
 
 document.addEventListener('DOMContentLoaded', (e) => {
     getExpenses() 
@@ -34,15 +39,27 @@ function getExpenses(){
     .then(res => {
         const result = res.data
         const expenseList = document.getElementById('expenseList')
-
+        
         if(result.length > 0){
             expenseList.innerHTML = ''
             result.forEach(expense => {
                 div = document.createElement('div')
-                div.innerText= `$${expense.amount}--${expense.description}--${expense.category}`
+                div.className = 'expenseItem'
+                div.innerHTML= `<span class="expenseItemAmount">$${expense.amount}</span><span class="expenseItemDesc">${expense.description}</span><span class="expenseItemCat">${expense.category}</span><button class="expenseItemDel">Delete</button><span class="expenseItemId">${expense.id}<span>`
                 expenseList.append(div)
             })
         }
+    })
+    .catch(err => console.log('Get Expenses: ', err))
+}
+
+function delExpense(e) {
+    const id = e.target.nextSibling.textContent
+    const token = localStorage.getItem('token')
+    
+    axios.post('http://localhost:3000/expense/delete/', { id }, {headers: {"Authorization": token}})
+    .then(_ => {
+        e.target.parentElement.remove()
     })
     .catch(err => console.log(err))
 }
@@ -104,7 +121,6 @@ function premiumUser() {
 
     axios.get('http://localhost:3000/purchase/is-premium', {headers: {"Authorization": token}}) 
     .then(res => {
-        console.log(res)
         const body = document.body
         const h1 = document.querySelector('.container h1')
         const expenses = document.querySelector('.expenses')
@@ -113,8 +129,9 @@ function premiumUser() {
         const submit = document.querySelector('.submit')
         const rzpButton = document.querySelector('#rzp-button1')
         const leadButton = document.getElementById('leaderBoard')
+        const expenseList = document.getElementsByClassName('expenseItem')
+        const delExpense = document.getElementsByClassName('expenseItemDel')
         
-        console.log(rzpButton)
         body.classList.add('active')
         h1.classList.add('active')
         expenses.classList.add('active')
@@ -124,9 +141,15 @@ function premiumUser() {
         submit.classList.add('active')
         leadButton.classList.add('active')
 
+        for(let expenseItem of expenseList){
+            expenseItem.classList.add('active')
+        }
+        for(let expenseItemDel of delExpense){
+            expenseItemDel.classList.add('active')
+        }
+
         rzpButton.remove()
     })
-    .catch(err => console.log(err, 999999999999))
 }
 
 const leaderBoard = document.getElementById('leaderBoard').onclick = function(){
