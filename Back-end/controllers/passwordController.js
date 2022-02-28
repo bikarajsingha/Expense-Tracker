@@ -48,12 +48,22 @@ exports.resetPassword = async(req, res) => {
     try{
         const uid = req.params.uuid
 
-        const user = await forgetPasswordRequestService.requestAuthentication(uid)
-    
-        if(user) return res.render('forgetPassword', {uid: uid})
+        const user = await forgetPasswordRequestService.getUser(uid)
+
+        if(user) {
+            let isActive = user.dataValues.isActive
+            let date = new Date()
+
+            if(date.getTime() <= isActive.getTime()){
+                return res.render('forgetPassword', {uid: uid})
+            }
+
+            throw "Time expired"
+        }
+        
+        throw "user not found"
     }catch(err) {
-        console.log(err)
-        return res.status(404).json({success: false, err})
+        return res.status(500).json({success: false, err})
     }
 }
 

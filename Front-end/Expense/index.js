@@ -47,6 +47,8 @@ function getExpenses(){
                 div.className = 'expenseItem'
                 div.innerHTML= `<span class="expenseItemAmount">$${expense.amount}</span><span class="expenseItemDesc">${expense.description}</span><span class="expenseItemCat">${expense.category}</span><button class="expenseItemDel">Delete</button><span class="expenseItemId">${expense.id}<span>`
                 expenseList.append(div)
+
+                if(expense.category == 'Salary') div.style.backgroundColor = 'lightgreen'
             })
         }
     })
@@ -131,6 +133,8 @@ function premiumUser() {
         const leadButton = document.getElementById('leaderBoard')
         const expenseList = document.getElementsByClassName('expenseItem')
         const delExpense = document.getElementsByClassName('expenseItemDel')
+        const report = document.getElementById('report')
+
         
         body.classList.add('active')
         h1.classList.add('active')
@@ -140,6 +144,7 @@ function premiumUser() {
         select.classList.add('active')
         submit.classList.add('active')
         leadButton.classList.add('active')
+        report.classList.add('active')
 
         for(let expenseItem of expenseList){
             expenseItem.classList.add('active')
@@ -152,6 +157,11 @@ function premiumUser() {
     })
 }
 
-const leaderBoard = document.getElementById('leaderBoard').onclick = function(){
+document.getElementById('leaderBoard').onclick = function(){
     window.location.href="./leaderboard.html"
 }
+
+document.getElementById('report').onclick = function() {
+    window.location.href="./report.html"
+}
+

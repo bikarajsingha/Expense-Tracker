@@ -39,7 +39,7 @@ function getUsers() {
             div.innerHTML = `
             <span class="rank">${i+1}</span>
             <span class="user">${row.name}</span>
-            <span class="amountSpent">${row.totalExpense}</span>
+            <span class="amountSpent">$${row.totalExpense}</span>
             `
             rowDiv.append(div)
             leaderBoard.innerHTML += rowDiv.innerHTML

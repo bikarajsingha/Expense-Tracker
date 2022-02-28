@@ -14,7 +14,7 @@
     <main class="container">
         <div class="expenses">
             <span class="expensesHeader">
-                <h1>ADD YOUR EXPENSES</h1>
+                <h1>CALCULATE EXPENDITURE</h1>
             </span>
             <form id="expensesForm" class="expensesForm">
                 <label for="expense">Amount</label>
@@ -23,19 +23,20 @@
                 <input type="text" id="description" name="description" required>
                 <label for="category">Category</label>
                 <select id="category" name="category">
-                    <option value="Fuel" default>Fuel</option>
+                    <option value="Salary">Salary</option>
                     <option value="Food">Food</option>
                     <option value="Electricity">Electricity</option>
-                    <option value="Movie">Movie</option>
+                    <option value="Fuel">Fuel</option>
+                    <option value="Rent">Rent</option>
                 </select>
                 <button type="submit" class="submit" id="expenseButton">Add Expense</button>
-                
             </form>
             <div id="expenseList"></div>
         </div>
     </main>
     <button id="rzp-button1">BUY PREMIUM</button>
     <button id="leaderBoard">LEADERBOARD</button>
+    <button id="report">REPORT</button>
     <div class="notifcationContainer" id="premium">
         <div class="notifcation">
             <h1 style="font-size: 50px;">Congratulations! </h1>

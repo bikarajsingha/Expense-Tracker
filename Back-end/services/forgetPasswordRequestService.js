@@ -7,10 +7,7 @@ exports.request = (user, uid, date) => {
     })
 }
 
-exports.requestAuthentication = (id) => {
-    return ForgetPasswordRequest.findByPk(id)
-}
-
 exports.getUser = (id) => {
     return ForgetPasswordRequest.findByPk(id)
 }
+
